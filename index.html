@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EduBridge | Unified Course Portal & Creator Co-Promotion</title>
+  <!-- Tailwind CSS CDN for instant modern styling in VS Code -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="bg-slate-50 text-slate-900 font-sans min-h-screen flex flex-col">
+
+  <!-- Top Navigation Bar -->
+  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur border-b border-slate-200 px-6 py-3.5 shadow-sm">
+    <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-4">
+      <div class="flex items-center gap-2.5">
+        <div class="bg-indigo-600 text-white p-2 rounded-xl shadow-sm">
+          <i data-lucide="book-open" class="w-6 h-6"></i>
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="text-xl font-extrabold tracking-tight text-indigo-950">EduBridge</span>
+
+          </div>
+          <p class="text-xs text-slate-500">Unbiased Paid & Free Course Aggregation + Creator Network</p>
+        </div>
+      </div>
+
+      <!-- Navigation Tabs -->
+      <nav class="flex items-center gap-2 text-sm font-semibold">
+        <button onclick="switchTab('explore')" id="tab-explore" class="tab-btn active-tab px-3.5 py-2 rounded-lg transition flex items-center gap-1.5">
+          <i data-lucide="layout-grid" class="w-4 h-4"></i> Unified Catalog
+        </button>
+        <button onclick="switchTab('roadmap')" id="tab-roadmap" class="tab-btn px-3.5 py-2 rounded-lg transition flex items-center gap-1.5 text-slate-600 hover:bg-slate-100">
+          <i data-lucide="sparkles" class="w-4 h-4 text-indigo-600"></i> AI Course Advisor
+        </button>
+        <button onclick="switchTab('creators')" id="tab-creators" class="tab-btn px-3.5 py-2 rounded-lg transition flex items-center gap-1.5 text-slate-600 hover:bg-slate-100">
+          <i data-lucide="handshake" class="w-4 h-4 text-amber-600"></i> Creator Co-Promotion
+        </button>
+        <button onclick="switchTab('metrics')" id="tab-metrics" class="tab-btn px-3.5 py-2 rounded-lg transition flex items-center gap-1.5 text-slate-600 hover:bg-slate-100">
+          <i data-lucide="bar-chart-3" class="w-4 h-4 text-emerald-600"></i> Impact & Metrics
+        </button>
+      </nav>
+
+      <!-- Compare Button -->
+      <button onclick="openCompareModal()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-xl text-sm font-bold shadow-sm transition flex items-center gap-2">
+        <i data-lucide="scale" class="w-4 h-4"></i>
+        <span>Compare Tray</span>
+        <span id="compare-count" class="bg-amber-400 text-slate-950 px-2 py-0.5 rounded-full text-xs font-extrabold">2/3</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT CONTAINER -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-6 py-8">
+
+    <!-- ==================== VIEW 1: UNIFIED COURSE EXPLORER ==================== -->
+    <section id="view-explore" class="space-y-8">
+      <!-- Hero Banner -->
+      <div class="bg-gradient-to-r from-indigo-950 via-indigo-900 to-blue-900 rounded-2xl p-8 text-white shadow-lg relative overflow-hidden">
+        <div class="max-w-3xl relative z-10">
+          <span class="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider bg-white/10 text-amber-300 px-3 py-1 rounded-full mb-3 border border-white/15">
+            <i data-lucide="zap" class="w-3.5 h-3.5"></i> Zero Decision Fatigue • Level Playing Field
+          </span>
+          <h1 class="text-3xl md:text-4xl font-extrabold leading-tight mb-3">
+            Compare Every Paid & Free Course in One Unified Portal.
+          </h1>
+          <p class="text-indigo-200 text-sm md:text-base mb-6">
+            Stop tab-hopping across Coursera, Udemy, NPTEL, and YouTube. We rank free and paid courses on the exact same syllabus & outcome metrics while empowering independent creators through mutual promotion.
+          </p>
+
+          <!-- Search & Filter Bar -->
+          <div class="flex flex-col md:flex-row gap-3 bg-white/10 p-2.5 rounded-xl backdrop-blur-md border border-white/15">
+            <div class="flex items-center bg-white text-slate-800 rounded-lg px-3.5 py-2.5 flex-1">
+              <i data-lucide="search" class="w-4 h-4 text-slate-400 mr-2"></i>
+              <input id="search-input" oninput="renderCourses()" type="text" placeholder="Search C++, DSA, Machine Learning, React, NPTEL, Udemy..." class="w-full outline-none text-sm" />
+            </div>
+            <div class="flex gap-1.5">
+              <button onclick="setPriceFilter('All')" id="filter-All" class="price-pill bg-amber-400 text-slate-950 px-4 py-2 rounded-lg text-xs font-extrabold transition">All Levels</button>
+              <button onclick="setPriceFilter('Free')" id="filter-Free" class="price-pill bg-white/15 text-white hover:bg-white/25 px-4 py-2 rounded-lg text-xs font-bold transition">Free Only (₹0)</button>
+              <button onclick="setPriceFilter('Paid')" id="filter-Paid" class="price-pill bg-white/15 text-white hover:bg-white/25 px-4 py-2 rounded-lg text-xs font-bold transition">Paid</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Secondary Filters -->
+      <div class="flex flex-wrap items-center justify-between gap-4 bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+        <div class="flex flex-wrap items-center gap-4 text-xs font-semibold text-slate-700">
+          <span class="flex items-center gap-1.5 text-slate-900 font-bold">
+            <i data-lucide="sliders-horizontal" class="w-4 h-4 text-indigo-600"></i> Smart Filters:
+          </span>
+          <label class="flex items-center gap-2 cursor-pointer bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-200">
+            <input type="checkbox" id="cert-filter" onchange="renderCourses()" class="accent-indigo-600" />
+            <span>Certificate Included</span>
+          </label>
+          <label class="flex items-center gap-2 cursor-pointer bg-amber-50/70 px-3 py-1.5 rounded-lg border border-amber-200 text-amber-900">
+            <input type="checkbox" id="partner-filter" onchange="renderCourses()" class="accent-amber-600" />
+            <span>Mutual Partner Spotlight Only</span>
+          </label>
+          <select id="domain-filter" onchange="renderCourses()" class="bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-200 outline-none">
+            <option value="All">All Domains</option>
+            <option value="DSA & Programming">DSA & Programming</option>
+            <option value="AI & Machine Learning">AI & Machine Learning</option>
+            <option value="Full-Stack Web Dev">Full-Stack Web Dev</option>
+          </select>
+        </div>
+        <div id="course-counter" class="text-xs font-semibold text-slate-500"></div>
+      </div>
+
+      <!-- Dynamic Course Grid -->
+      <div id="course-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+    </section>
+
+    <!-- ==================== VIEW 2: AI LEARNING ROADMAP & RECOMMENDER ==================== -->
+    <section id="view-roadmap" class="hidden max-w-4xl mx-auto space-y-6">
+      <div class="bg-white rounded-2xl border border-slate-200 p-8 shadow-sm">
+        <div class="flex items-center gap-2 text-indigo-600 font-bold text-xs uppercase tracking-wider mb-2">
+          <i data-lucide="cpu" class="w-4 h-4"></i> Applied AI & NLP Content-Based Filtering Engine
+        </div>
+        <h2 class="text-2xl font-extrabold text-slate-900 mb-2">Personalized AI Course Matcher & Confidence Score</h2>
+        <p class="text-sm text-slate-600 mb-6">
+          Prevent impulsive course buying. Enter your current skills, target career goal, and budget constraint—our AI computes a <strong>Cosine Similarity Confidence Score</strong> across paid and free syllabi to build your optimal roadmap.
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+          <div>
+            <label class="block text-xs font-bold uppercase text-slate-500 mb-1.5">Your Target Goal / Keywords</label>
+            <select id="ai-goal" class="w-full border border-slate-300 rounded-xl p-2.5 text-sm font-semibold bg-slate-50">
+              <option value="Full-Stack Web Dev">Full-Stack Web Developer (React, Node, MongoDB)</option>
+              <option value="AI & Machine Learning">Applied AI & Machine Learning Engineer</option>
+              <option value="DSA & Programming">C++ Data Structures & Placement Prep</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-bold uppercase text-slate-500 mb-1.5">Budget Constraint</label>
+            <select id="ai-budget" class="w-full border border-slate-300 rounded-xl p-2.5 text-sm font-semibold bg-slate-50">
+              <option value="All">Smart Hybrid (Best Free + Affordable Paid)</option>
+              <option value="Free">Strict ₹0 Budget (100% Free Courses Only)</option>
+            </select>
+          </div>
+          <div class="flex items-end">
+            <button onclick="generateAIRoadmap()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2.5 px-4 rounded-xl text-sm transition flex items-center justify-center gap-2 shadow-sm">
+              <i data-lucide="sparkles" class="w-4 h-4"></i> Compute AI Match
+            </button>
+          </div>
+        </div>
+
+        <!-- AI Roadmap Output -->
+        <div id="ai-roadmap-output" class="space-y-4 border-t border-slate-200 pt-6"></div>
+      </div>
+    </section>
+
+    <!-- ==================== VIEW 3: CREATOR CO-PROMOTION HUB ==================== -->
+    <section id="view-creators" class="hidden max-w-5xl mx-auto space-y-6">
+      <div class="bg-white rounded-2xl border border-slate-200 p-8 shadow-sm">
+        <span class="text-xs font-extrabold bg-amber-100 text-amber-800 px-3 py-1 rounded-full uppercase">
+          Mutual Promotion Engine (B2B + Independent Educators)
+        </span>
+        <h2 class="text-2xl font-extrabold mt-3 mb-2 text-slate-900">
+          Collaborate With EduBridge: Promote Each Other, Grow Together
+        </h2>
+        <p class="text-sm text-slate-600 mb-6">
+          Independent course creators and platforms list their courses here for free. By sharing an exclusive student promo code and embedding our referral link on their channel, their course automatically unlocks the <strong>"Partner Spotlight"</strong> badge on our main catalog.
+        </p>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <!-- Creator Course Submission Form -->
+          <form onsubmit="submitCreatorCourse(event)" class="space-y-4 bg-slate-50 p-6 rounded-xl border border-slate-200">
+            <h3 class="font-bold text-base text-slate-900 flex items-center gap-2">
+              <i data-lucide="plus-circle" class="w-5 h-5 text-indigo-600"></i> List Your Course on the Unified Portal
+            </h3>
+            <div>
+              <label class="block text-xs font-bold text-slate-600 mb-1">Course Title *</label>
+              <input id="c-title" required type="text" placeholder="e.g., Practical System Design & Microservices" class="w-full border border-slate-300 rounded-lg p-2.5 text-sm bg-white" />
+            </div>
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label class="block text-xs font-bold text-slate-600 mb-1">Platform / Creator Name *</label>
+                <input id="c-provider" required type="text" placeholder="e.g., CodeWithAnanya / YouTube" class="w-full border border-slate-300 rounded-lg p-2.5 text-sm bg-white" />
+              </div>
+              <div>
+                <label class="block text-xs font-bold text-slate-600 mb-1">Domain *</label>
+                <select id="c-domain" class="w-full border border-slate-300 rounded-lg p-2.5 text-sm bg-white">
+                  <option value="Full-Stack Web Dev">Full-Stack Web Dev</option>
+                  <option value="AI & Machine Learning">AI & Machine Learning</option>
+                  <option value="DSA & Programming">DSA & Programming</option>
+                </select>
+              </div>
+            </div>
+            <div class="grid grid-cols-3 gap-3">
+              <div>
+                <label class="block text-xs font-bold text-slate-600 mb-1">Course Type *</label>
+                <select id="c-type" class="w-full border border-slate-300 rounded-lg p-2.5 text-sm bg-white">
+                  <option value="Free">Free (₹0)</option>
+                  <option value="Paid">Paid</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-xs font-bold text-slate-600 mb-1">Price Display *</label>
+                <input id="c-price" required type="text" placeholder="₹0 or ₹699" class="w-full border border-slate-300 rounded-lg p-2.5 text-sm bg-white" />
+              </div>
+              <div>
+                <label class="block text-xs font-bold text-slate-600 mb-1">Mutual Promo Code *</label>
+                <input id="c-promo" required type="text" placeholder="EDUBRIDGE50" class="w-full border border-slate-300 rounded-lg p-2.5 text-sm bg-white uppercase" />
+              </div>
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-slate-600 mb-1">Core Syllabus Topics (comma-separated) *</label>
+              <input id="c-syllabus" required type="text" placeholder="Node.js, Docker, REST APIs, MongoDB" class="w-full border border-slate-300 rounded-lg p-2.5 text-sm bg-white" />
+            </div>
+            <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2.5 rounded-lg text-sm transition shadow-sm">
+              Publish Course & Activate Mutual Spotlight
+            </button>
+          </form>
+
+          <!-- Mutual Promotion Widget Generator -->
+          <div class="bg-slate-900 text-white p-6 rounded-xl flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-3">
+                <span class="text-xs font-bold text-amber-400 uppercase tracking-wider">Cross-Promotion Referral Kit</span>
+                <span class="text-xs bg-emerald-500/20 text-emerald-300 px-2.5 py-0.5 rounded-full">Zero Ad Spend</span>
+              </div>
+              <h4 class="font-bold text-lg mb-2">How Mutual Promotion Works:</h4>
+              <ol class="text-xs text-slate-300 space-y-2.5 list-decimal list-inside mb-6">
+                <li><strong>Creator Promotes EduBridge:</strong> Place this custom referral badge in your YouTube description, LinkedIn, or course landing page.</li>
+                <li><strong>EduBridge Promotes Creator:</strong> Our algorithm boosts your course with a golden <em>"Partner Spotlight"</em> badge and displays your discount code directly to students comparing courses.</li>
+                <li><strong>Shared Analytics & Revenue:</strong> Track direct student clicks, affiliate conversions, and verified learner reviews.</li>
+              </ol>
+
+              <div class="bg-black/60 p-4 rounded-lg border border-slate-700 mb-4">
+                <p class="text-[11px] text-slate-400 mb-1">Embeddable Partner Snippet:</p>
+                <code id="partner-snippet" class="text-xs text-emerald-400 font-mono break-all">
+                  https://edubridge.portal/compare?partner=verified_creator&utm_source=mutual_promo
+                </code>
+              </div>
+            </div>
+
+            <button onclick="copySnippet()" id="copy-btn" class="w-full bg-amber-400 hover:bg-amber-300 text-slate-950 font-extrabold py-2.5 rounded-lg text-xs transition">
+              Copy Mutual Promotion Link
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== VIEW 4: LEAN CANVAS KEY METRICS DASHBOARD ==================== -->
+    <section id="view-metrics" class="hidden max-w-5xl mx-auto space-y-6">
+      <div class="bg-white rounded-2xl border border-slate-200 p-8 shadow-sm">
+        <h2 class="text-2xl font-extrabold text-slate-900 mb-2">Lean Canvas Key Metrics & Sustainability Tracker</h2>
+        <p class="text-sm text-slate-600 mb-6">Real-time simulation of the Key Metrics and Revenue Streams defined in the EduBridge Lean Canvas.</p>
+
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+          <div class="bg-indigo-50 border border-indigo-100 p-5 rounded-xl">
+            <span class="text-xs font-bold text-indigo-600 uppercase">Active Learners (MAU)</span>
+            <p class="text-3xl font-extrabold text-indigo-950 mt-1">14,820</p>
+            <span class="text-xs text-emerald-700 font-semibold">↑ +24% via Creator Referrals</span>
+          </div>
+          <div class="bg-emerald-50 border border-emerald-100 p-5 rounded-xl">
+            <span class="text-xs font-bold text-emerald-700 uppercase">Free vs Paid Ratio</span>
+            <p class="text-3xl font-extrabold text-emerald-950 mt-1">50 : 50</p>
+            <span class="text-xs text-slate-600">100% Unbiased Ranking</span>
+          </div>
+          <div class="bg-amber-50 border border-amber-100 p-5 rounded-xl">
+            <span class="text-xs font-bold text-amber-800 uppercase">Onboarded Creator Partners</span>
+            <p id="metric-partners" class="text-3xl font-extrabold text-amber-950 mt-1">48</p>
+            <span class="text-xs text-amber-800 font-semibold">Mutual Cross-Promotion Active</span>
+          </div>
+          <div class="bg-slate-100 border border-slate-200 p-5 rounded-xl">
+            <span class="text-xs font-bold text-slate-600 uppercase">Affiliate & Referral Clicks</span>
+            <p id="metric-clicks" class="text-3xl font-extrabold text-slate-900 mt-1">3,412</p>
+            <span class="text-xs text-indigo-600 font-semibold">18.4% Enrollment Conversion</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==================== SIDE-BY-SIDE COMPARISON MODAL ==================== -->
+  <div id="compare-modal" class="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm hidden items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-5xl w-full p-6 max-h-[90vh] overflow-y-auto shadow-2xl border border-slate-200">
+      <div class="flex justify-between items-center border-b border-slate-200 pb-4 mb-6">
+        <div>
+          <span class="text-xs font-bold uppercase text-indigo-600">Trivago-Style Course Comparison</span>
+          <h3 class="text-xl font-extrabold text-slate-900">Unbiased Side-by-Side Syllabus & Value Comparison</h3>
+        </div>
+        <button onclick="closeCompareModal()" class="p-2 hover:bg-slate-100 rounded-full text-slate-500">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+      <div id="compare-Modal-content" class="grid grid-cols-1 md:grid-cols-3 gap-4"></div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
